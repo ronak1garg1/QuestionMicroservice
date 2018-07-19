@@ -15,5 +15,6 @@ import java.util.List;
 public interface QuestionRespository extends CrudRepository<QuestionEntity, String> {
 
     public List<QuestionEntity> getAllByCategoryId(String categoryId);
+    public List<QuestionEntity> getAllByDifficulty(String difficulty);
 
 }

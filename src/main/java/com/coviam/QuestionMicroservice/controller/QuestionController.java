@@ -7,19 +7,10 @@ import com.coviam.QuestionMicroservice.entity.CategoryEntity;
 import com.coviam.QuestionMicroservice.entity.QuestionEntity;
 import com.coviam.QuestionMicroservice.service.impl.CategoryServiceImpl;
 import com.coviam.QuestionMicroservice.service.impl.QuestionServiceImpl;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 @RestController
@@ -257,5 +248,16 @@ public class QuestionController {
         }
         return new ResponseEntity<List<QuestionDTO>>(questionDTOList, HttpStatus.OK);
      }
+    @RequestMapping(value = "getByDifficulty/{difficulty}",method = RequestMethod.GET)
+    public ResponseEntity<List<QuestionDTO>> getByDifficulty(@PathVariable("difficulty") String difficulty){
+        List<QuestionEntity> questionEntityList = questionService.getByDifficulty(difficulty);
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        for (QuestionEntity questionEntity : questionEntityList) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(questionEntity, questionDTO);
+            questionDTOList.add(questionDTO);
+        }
+        return new ResponseEntity<List<QuestionDTO>>(questionDTOList, HttpStatus.OK);
+    }
 
 }

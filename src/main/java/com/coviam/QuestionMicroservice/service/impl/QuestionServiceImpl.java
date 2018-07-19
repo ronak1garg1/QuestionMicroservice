@@ -100,5 +100,11 @@ public class QuestionServiceImpl implements QuestionServiceInterface {
         return questionEntityList;
     }
 
+    @Override
+    public List<QuestionEntity> getByDifficulty(String difficulty) {
+        List<QuestionEntity>  questionEntityList = questionRespository.getAllByDifficulty(difficulty);
+        return questionEntityList;
+    }
+
 
 }

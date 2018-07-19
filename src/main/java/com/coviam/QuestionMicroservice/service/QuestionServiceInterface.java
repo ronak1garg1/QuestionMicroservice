@@ -26,5 +26,6 @@ public interface QuestionServiceInterface {
 
     public List<QuestionEntity> getAllStatusPage(String status,int pageNumber);
     public List<QuestionEntity> getByCategoryId(String categoryId);
+    public List<QuestionEntity> getByDifficulty(String difficulty);
 
 }
