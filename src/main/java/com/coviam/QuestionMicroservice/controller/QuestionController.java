@@ -186,35 +186,35 @@ public class QuestionController {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "readCSV")
-    public ResponseEntity<List<QuestionDTO>> readFromCsv() throws IOException {
-
-
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
-        List<QuestionEntity> questionEntityList1 = new ArrayList<>();
-        try (Reader reader = Files.newBufferedReader(Paths.get("/Users/ronakgarg/Documents/QuestionMicroservice/question_data.csv"));) {
-            CsvToBean<QuestionEntity> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(QuestionEntity.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-            questionEntityList1 = csvToBean.parse();
-
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<Object> entity = new HttpEntity<Object>(questionEntityList1, httpHeaders);
-            ResponseEntity<List<QuestionEntity>> rs = restTemplate.exchange("http://10.177.1.100:8080/question/saveAll"
-                    , HttpMethod.POST, entity
-                    , new ParameterizedTypeReference<List<QuestionEntity>>() {
-                    });
-            for (QuestionEntity questionEntity : questionEntityList1) {
-                QuestionDTO questionDTO = new QuestionDTO();
-                BeanUtils.copyProperties(questionEntity, questionDTO);
-                questionDTOList.add(questionDTO);
-            }
-        }
-        return new ResponseEntity<List<QuestionDTO>>(questionDTOList, HttpStatus.OK);
-    }
+//    @RequestMapping(method = RequestMethod.POST, value = "readCSV")
+//    public ResponseEntity<List<QuestionDTO>> readFromCsv() throws IOException {
+//
+//
+//        List<QuestionDTO> questionDTOList = new ArrayList<>();
+//        List<QuestionEntity> questionEntityList1 = new ArrayList<>();
+//        try (Reader reader = Files.newBufferedReader(Paths.get("/Users/ronakgarg/Documents/QuestionMicroservice/question_data.csv"));) {
+//            CsvToBean<QuestionEntity> csvToBean = new CsvToBeanBuilder(reader)
+//                    .withType(QuestionEntity.class)
+//                    .withIgnoreLeadingWhiteSpace(true)
+//                    .build();
+//            questionEntityList1 = csvToBean.parse();
+//
+//            RestTemplate restTemplate = new RestTemplate();
+//            HttpHeaders httpHeaders = new HttpHeaders();
+//            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//            HttpEntity<Object> entity = new HttpEntity<Object>(questionEntityList1, httpHeaders);
+//            ResponseEntity<List<QuestionEntity>> rs = restTemplate.exchange("http://10.177.1.100:8080/question/saveAll"
+//                    , HttpMethod.POST, entity
+//                    , new ParameterizedTypeReference<List<QuestionEntity>>() {
+//                    });
+//            for (QuestionEntity questionEntity : questionEntityList1) {
+//                QuestionDTO questionDTO = new QuestionDTO();
+//                BeanUtils.copyProperties(questionEntity, questionDTO);
+//                questionDTOList.add(questionDTO);
+//            }
+//        }
+//        return new ResponseEntity<List<QuestionDTO>>(questionDTOList, HttpStatus.OK);
+//    }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAllByStatus/{status}/{pageNumber}")
     public ResponseEntity<?> getAllByStatusPage(@PathVariable("status") String status, @PathVariable("pageNumber") int pageNumber) {
